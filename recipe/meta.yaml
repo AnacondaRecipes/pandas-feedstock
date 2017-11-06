@@ -11,7 +11,7 @@ source:
   sha256: 5cd5cb30e72eeaf202f0e5e180780b897570e889d2db328c689a5a263405c559
 
 build:
-  number: 0
+  number: 1
   script: python setup.py install --single-version-externally-managed --record=record.txt  # [win]
 
 requirements:
@@ -25,7 +25,7 @@ requirements:
     - numpy
   run:
     - python
-    - {{ pin_compatible('numpy', max_pin='x.x') }}
+    - {{ pin_compatible('numpy') }}
     - python-dateutil
     - pytz
 
