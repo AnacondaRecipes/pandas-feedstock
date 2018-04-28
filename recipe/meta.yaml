@@ -6,9 +6,8 @@ package:
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://github.com/pandas-dev/pandas/releases/download/v{{ version }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 44a94091dd71f05922eec661638ec1a35f26d573c119aa2fad964f10a2880e6c
+  git_url: https://github.com/pandas-dev/pandas
+  git_tag: v{{ version }}
 
 build:
   number: 0
@@ -18,6 +17,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - git
   host:
     - python
     - setuptools
