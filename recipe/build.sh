@@ -7,4 +7,4 @@ ${PYTHON} setup.py cython
 # -fwrapv because that's what Pandas do on their CI:
 # https://github.com/pandas-dev/pandas/pull/12946
 CFLAGS="${CFLAGS} -fno-strict-aliasing -fwrapv" \
-  ${PYTHON} setup.py install --single-version-externally-managed --record=record.txt
+    ${PYTHON} -m pip install --no-deps --ignore-installed -v .
