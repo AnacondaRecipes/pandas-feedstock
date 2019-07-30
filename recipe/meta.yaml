@@ -22,12 +22,12 @@ requirements:
     - pip
     - cython
     - numpy 1.14.*  # [py==37]
-    - numpy 1.12.*  # [py!=37]
+    - numpy 1.13.*  # [py!=37]
   run:
     - python
     - {{ pin_compatible('numpy') }}
-    - python-dateutil >=2.5.*
-    - pytz
+    - python-dateutil >=2.6.1
+    - pytz >=2017.2
 
 test:
   imports:
