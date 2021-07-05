@@ -39,7 +39,7 @@ requirements:
     - pytz >=2017.3
     # Recommended dependencies to achieve large speedups 
     # see https://pandas.pydata.org/pandas-docs/stable/getting_started/install.html#recommended-dependencies
-    - numexpr >=2.6.8
+    - numexpr >=2.7.0
     - bottleneck >=1.2.1
 
 test:
