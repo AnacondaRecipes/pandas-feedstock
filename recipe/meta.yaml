@@ -33,7 +33,7 @@ requirements:
     - setuptools >=38.6.0
     - wheel
   run:
-    - python
+    - python >=3.7.1
     - {{ pin_compatible('numpy') }}
     - python-dateutil >=2.7.3
     - pytz >=2017.3
@@ -41,8 +41,6 @@ requirements:
     # see https://pandas.pydata.org/pandas-docs/stable/getting_started/install.html#recommended-dependencies
     - numexpr >=2.7.0
     - bottleneck >=1.2.1
-  run_constrained:
-    - python !=3.7.0
 
 test:
   requires:
