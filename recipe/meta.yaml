@@ -29,12 +29,13 @@ requirements:
     - python
     - pip
     - cython >=0.29.21
-    - {{ pin_compatible('numpy') }}
+    - numpy-devel  # [py>=38]
+    - numpy >=1.17.3  # [py37]
     - setuptools >=38.6.0
     - wheel
   run:
     - python >=3.7.1
-    - {{ pin_compatible('numpy') }}
+    - {{ pin_compatible('numpy') }}  # [py37]
     - python-dateutil >=2.7.3
     - pytz >=2017.3
     # Recommended dependencies to achieve large speedups
