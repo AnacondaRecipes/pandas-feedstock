@@ -25,7 +25,7 @@ requirements:
   host:
     - python
     - pip
-    - cython >=0.29.21,<3
+    - cython >=0.29.24,<3
     - numpy
     - setuptools >=51.0.0
     - wheel
