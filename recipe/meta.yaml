@@ -44,11 +44,13 @@ test:
     - pip
     - hypothesis >=3.58
     - pytest >=6.0
-    - pytest-xdist 
+    - pytest-xdist
+#    - datatest
   imports:
     - pandas
   commands:
     - pip check
+    - pip install datatest
 
 about:
   home: http://pandas.pydata.org
