@@ -1,11 +1,17 @@
 from pandas._testing import assert_frame_equal
 import pandas as pd
-import datatest as dt
+
 import logging
+import pip
 
 logging_level = logging.INFO
 logging.basicConfig(level=logging_level)
 
+if hasattr(pip, 'main'):
+    pip.main(['install', "datatest"])
+else:
+    pip._internal.main(['install', "datatest"])
+import datatest as dt
 
 class PandasTests():
     """
@@ -14,6 +20,7 @@ class PandasTests():
 
     def __init__(self):
         self.run()
+
 
     def test_pandas_pkg(self):
         """
