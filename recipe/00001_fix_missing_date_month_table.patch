@@ -1,0 +1,11 @@
+diff -urN a/pandas/_libs/missing.pyx b/pandas/_libs/missing.pyx
+--- a/pandas/_libs/missing.pyx	2021-12-12 13:20:47.000000000 +0300
++++ b/pandas/_libs/missing.pyx	2022-01-05 13:40:10.312977909 +0300
+@@ -23,6 +23,7 @@
+     is_null_datetimelike,
+ )
+ from pandas._libs.tslibs.np_datetime cimport (
++    days_per_month_table,
+     get_datetime64_value,
+     get_timedelta64_value,
+ )

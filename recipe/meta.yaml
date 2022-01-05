@@ -7,6 +7,8 @@ package:
 source:
   url: https://github.com/pandas-dev/pandas/releases/download/v{{ version }}/pandas-{{ version }}.tar.gz
   sha256: 1e4285f5de1012de20ca46b188ccf33521bff61ba5c5ebd78b4fb28e5416a9f1
+  patches:
+    - 00001_fix_missing_date_month_table.patch  # [linux and aarch64]
 
 build:
   number: 0
@@ -22,6 +24,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - patch  # [not win]
   host:
     - python
     - pip
