@@ -1,11 +1,25 @@
-diff -urN a/pandas/_libs/missing.pyx b/pandas/_libs/missing.pyx
---- a/pandas/_libs/missing.pyx	2021-12-12 13:20:47.000000000 +0300
-+++ b/pandas/_libs/missing.pyx	2022-01-05 13:40:10.312977909 +0300
-@@ -23,6 +23,7 @@
-     is_null_datetimelike,
- )
- from pandas._libs.tslibs.np_datetime cimport (
-+    days_per_month_table,
-     get_datetime64_value,
-     get_timedelta64_value,
- )
+diff -urN a/pandas/_libs/src/ujson/python/objToJSON.c b/pandas/_libs/src/ujson/python/objToJSON.c
+--- a/pandas/_libs/src/ujson/python/objToJSON.c	2021-12-12 13:20:47.000000000 +0300
++++ b/pandas/_libs/src/ujson/python/objToJSON.c	2022-01-05 14:04:09.481310904 +0300
+@@ -149,6 +149,7 @@
+ void *initObjToJSON(void) {
+     PyObject *mod_pandas;
+     PyObject *mod_nattype;
++    PyObject *mod_np_datetime;
+     PyObject *mod_natype;
+     PyObject *mod_decimal = PyImport_ImportModule("decimal");
+     type_decimal =
+@@ -174,6 +175,13 @@
+         Py_DECREF(mod_nattype);
+     }
+ 
++    mod_np_datetime = PyImport_ImportModule("pandas._libs.tslibs.np_datetime");
++    if (mod_np_datetime) {
++        cls_ = (PyTypeObject*)PyObject_GetAttrString(mod_np_datetime,
++                                                     "OutOfBoundsDatetime");
++        Py_DECREF(mod_np_datetime);
++    }
++
+     mod_natype = PyImport_ImportModule("pandas._libs.missing");
+     if (mod_natype) {
+         cls_na = (PyTypeObject *)PyObject_GetAttrString(mod_natype, "NAType");
