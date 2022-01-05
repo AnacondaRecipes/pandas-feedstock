@@ -25,6 +25,8 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
+    - patch  # [unix]
+    - m2-patch  # [windows]
     - python
     - pip
     - cython >=0.29.24,<3
