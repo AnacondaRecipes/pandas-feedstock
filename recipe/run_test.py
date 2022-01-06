@@ -25,7 +25,6 @@ class PandasTests():
     def test_pandas_pkg(self):
         """
         To validate the pandas pkg functionality
-
         """
         df1 = pd.DataFrame({'a': [1, 2], 'b': [3, 4]})
         df2 = pd.DataFrame({'a': [1, 2], 'b': [3.0, 4.0]})
@@ -71,4 +70,3 @@ class PandasTests():
 
 if __name__ == "__main__":
     obj = PandasTests()
-
