@@ -11,7 +11,7 @@ source:
     - 00001_fix_missing_date_month_table.patch  # [linux and aarch64]
 
 build:
-  number: 0
+  number: 1
   script:
     - export PYTHONUNBUFFERED=1  # [ppc64le]
     - {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed .  # [not unix]
@@ -47,7 +47,7 @@ test:
     - pip
     - hypothesis >=3.58
     - pytest >=6.0
-    - pytest-xdist 
+    - pytest-xdist
   imports:
     - pandas
   commands:
