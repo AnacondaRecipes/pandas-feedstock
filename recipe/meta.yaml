@@ -47,7 +47,7 @@ test:
     - pip
     - hypothesis >=3.58
     - pytest >=6.0
-    - pytest-xdist 
+    - pytest-xdist
   imports:
     - pandas
   commands:
