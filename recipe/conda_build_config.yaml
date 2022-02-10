@@ -1,5 +1,0 @@
-numpy:
-  - 1.19  # [aarch64 or s390x]
-  - 1.19  # [aarch64 or s390x]
-  - 1.21  # [osx and arm64]
-  - 1.21  # [osx and arm64]
