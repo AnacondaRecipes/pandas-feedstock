@@ -50,10 +50,17 @@ test:
     - hypothesis >=3.58
     - pytest >=6.0
     - pytest-xdist
+    - package-testing
   imports:
     - pandas
+  source_files:
+    - package-testing/anaconda_package_tests
   commands:
     - pip check
+    - pytest
+    - pytest -s anaconda_package_tests
+
+
 
 about:
   home: https://pandas.pydata.org
