@@ -53,12 +53,10 @@ test:
     - package-testing
   imports:
     - pandas
-  source_files:
-    - package-testing/anaconda_package_tests
   commands:
     - pip check
     - pytest
-    - pytest -s anaconda_package_tests
+    - pytest -s -vv ${CONDA_PREFIX}/lib/python${PY_VER}/site-packages/anaconda_package_tests
 
 
 
