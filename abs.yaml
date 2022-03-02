@@ -3,4 +3,4 @@ build_parameters:
   - "--skip-existing"
   - "--error-overlinking"
   - "--error-overdepending"
-  - "-c distro-tooling"
+  - "-c distro-tooling/label/dev"
