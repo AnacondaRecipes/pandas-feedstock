@@ -55,9 +55,9 @@ test:
     - pandas
   commands:
     - pip check
-    - pytest -s -vv ${CONDA_PREFIX}/lib/python${PY_VER}/site-packages/anaconda_package_tests
-
-
+    - python -c "import anaconda_package_tests; print(anaconda_package_tests.__path__[0])"
+    - tests_folder=$(python -c "import anaconda_package_tests; print(anaconda_package_tests.__path__[0])"); pytest -s -vv ${tests_folder}
+    #- pytest -s -vv ${CONDA_PREFIX}/lib/python${PY_VER}/site-packages/anaconda_package_tests
 
 about:
   home: https://pandas.pydata.org
