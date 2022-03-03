@@ -55,7 +55,7 @@ test:
     - pandas
   commands:
     - pip check
-    - pytest -s -vv ${CONDA_PREFIX}/lib/python${PY_VER}/site-packages/package-testing/anaconda_package_tests
+    - pytest -s -vv ${CONDA_PREFIX}/lib/python${PY_VER}/site-packages/anaconda_package_tests
 
 
 
