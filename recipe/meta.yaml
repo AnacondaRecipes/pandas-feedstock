@@ -12,6 +12,7 @@ source:
 
 build:
   number: 0
+  # trigger 1
   script:
     - export PYTHONUNBUFFERED=1  # [ppc64le]
     - {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed .  # [not unix]
