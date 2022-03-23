@@ -11,7 +11,7 @@ source:
     - 00001_fix_missing_date_month_table.patch  # [linux and aarch64]
 
 build:
-  number: 0
+  number: 1
   script:
     - export PYTHONUNBUFFERED=1  # [ppc64le]
     - {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed .  # [not unix]
@@ -31,7 +31,7 @@ requirements:
     - cython >=0.29.24
     - numpy   1.19  # [not (osx and arm64) and (py==38 or py==39)]
     - numpy   1.21  # [(osx and arm64) and (py==38 or py==39)]
-    - numpy   1.21  # [not ppc64le and py==310]
+    - numpy   1.21  # [py==310]
     - setuptools >=51.0.0
     - wheel
   run:
