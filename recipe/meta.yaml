@@ -31,7 +31,7 @@ requirements:
     - cython >=0.29.24
     - numpy   1.19  # [not (osx and arm64) and (py==38 or py==39)]
     - numpy   1.21  # [(osx and arm64) and (py==38 or py==39)]
-    - numpy   1.21  # [not ppc64le and py==310]
+    - numpy   1.21  # [py==310]
     - setuptools >=51.0.0
     - wheel
   run:
@@ -50,13 +50,13 @@ test:
     - hypothesis >=3.58
     - pytest >=6.0
     - pytest-xdist
-    - package-testing
   imports:
     - pandas
+  source_files:
+    - pandas/tests
   commands:
     - pip check
-    - pytest -s -vv ${CONDA_PREFIX}/lib/python${PY_VER}/site-packages/anaconda_package_tests
-
+    - python -c "import pandas; pandas.test(['-k', 'test_aggregation'])"
 
 
 about:
@@ -77,3 +77,5 @@ extra:
     - TomAugspurger
     - WillAyd
     - simonjayhawkins
+
+
