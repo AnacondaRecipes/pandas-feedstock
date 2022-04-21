@@ -52,6 +52,8 @@ test:
     - pytest-xdist
   imports:
     - pandas
+  source_files:
+    - pandas/tests
   commands:
     - pip check
     - pandas.test()
