@@ -51,15 +51,12 @@ test:
     - pytest >=6.0
     - pytest-xdist
     - pytest-html
+    - pytest-cov
   imports:
     - pandas
-  source_files:
-    - pandas/tests
   commands:
     - pip check
-    - python -c "import pandas; pandas.test(['-k', 'test_aggregation', '--html="reports/test-report.html" --self-contained-html'])"
-
-
+    - python -c "import pandas; pandas.test(['-k', 'test_aggregation', '--cov=pandas pandas/tests/', '--cov-report=html:../../cov_html', '--html="../../test-report.html"', '--self-contained-html'] )"
 about:
   home: https://pandas.pydata.org
   license: BSD-3-Clause
