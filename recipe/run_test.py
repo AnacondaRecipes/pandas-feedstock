@@ -24,9 +24,9 @@ class PandasTests():
     def test_pandas_pkg(self):
         """
         To validate the pandas pkg functionality
-        """
-        # Skip tests on ppc64le for python 3.8 
-        # because tests fail with an error "undefined symbol: xstrtod"  
+        """  
+        # Tests fail with an error "undefined symbol: xstrtod"
+        # on ppc64le for python 3.8 
         try:
             from pandas.testing import assert_frame_equal
         
