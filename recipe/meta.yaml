@@ -15,7 +15,8 @@ build:
   script:
     - export PYTHONUNBUFFERED=1  # [ppc64le]
     - {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed .  # [not unix]
-    - {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed . --global-option="build_ext" --global-option="-j${CPU_COUNT}" --no-use-pep517  # [unix]
+    # parallel build is disabled to avoid flaky build error. See https://github.com/pandas-dev/pandas/pull/48490
+    - {{ PYTHON }} -m pip install -vv --no-deps --ignore-installed . --global-option="build_ext" --global-option="-j1" --no-use-pep517  # [unix]
   entry_points:
     - matplotlib = pandas:plotting._matplotlib
   skip: true  # [py<38]
