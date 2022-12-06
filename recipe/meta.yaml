@@ -1,6 +1,7 @@
-{% set version = "1.5.1" %}
+{% set version = "1.5.2" %}
 {% set numpy = "1.20.3" %}  # [py<310 and (not osx and arm64)]
-{% set numpy = "1.21" %}  # [py>=310 or (osx and arm64)]
+{% set numpy = "1.21" %}  # [py==310 or (osx and arm64)]
+{% set numpy = "1.22" %}  # [py>=311]
 
 package:
   name: pandas
@@ -8,7 +9,7 @@ package:
 
 source:
   url: https://github.com/pandas-dev/pandas/releases/download/v{{ version }}/pandas-{{ version }}.tar.gz
-  sha256: 249cec5f2a5b22096440bd85c33106b6102e0672204abd2d5c014106459804ee
+  sha256: 220b98d15cee0b2cd839a6358bd1f273d0356bf964c1a1aeb32d47db0215488b
 
 build:
   number: 0
@@ -35,17 +36,17 @@ requirements:
   run:
     - python
     # Dependencies
-    # see https://pandas.pydata.org/pandas-docs/version/1.5.1/getting_started/install.html#dependencies
+    # see https://pandas.pydata.org/pandas-docs/version/1.5.2/getting_started/install.html#dependencies
     - numpy >={{ numpy }},<2.0a0
     - python-dateutil >=2.8.1
     - pytz >=2020.1
     # Recommended dependencies to achieve large speedups
-    # see https://pandas.pydata.org/pandas-docs/version/1.5.1/getting_started/install.html#recommended-dependencies
+    # see https://pandas.pydata.org/pandas-docs/version/1.5.2/getting_started/install.html#recommended-dependencies
     - numexpr >=2.7.3
     - bottleneck >=1.3.2
   run_constrained:
     # Optional dependencies
-    # see https://pandas.pydata.org/pandas-docs/version/1.5.1/getting_started/install.html#optional-dependencies
+    # see https://pandas.pydata.org/pandas-docs/version/1.5.2/getting_started/install.html#optional-dependencies
     - tzdata >=2022a
     - matplotlib-base >=3.3.2
     - jinja2 >=3.0.0
