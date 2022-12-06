@@ -1,7 +1,7 @@
 {% set version = "1.5.2" %}
 {% set numpy = "1.20.3" %}  # [py<310 and (not osx and arm64)]
 {% set numpy = "1.21" %}  # [py==310 or (osx and arm64)]
-{% set numpy = "1.22" %}  # [py>=311]
+{% set numpy = "1.23" %}  # [py>=311]
 
 package:
   name: pandas
