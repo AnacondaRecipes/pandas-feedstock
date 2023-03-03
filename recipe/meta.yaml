@@ -81,7 +81,7 @@ requirements:
 test:
   requires:
     - pip
-      # v1.5.3: project's code repo specifies >=5.5.3 but they suggest to use >=6.13.0 here: https://pandas.pydata.org/docs/getting_started/install.html#running-the-test-suite
+      # v1.5.3: project's code repo specifies >=5.5.3 but they suggest to use >=6.13.0 here: https://pandas.pydata.org/docs/getting_started/install.html#running-the-test-suite.
     - hypothesis >=6.13.0
     - pytest >=6.0
     - pytest-xdist >=1.31
