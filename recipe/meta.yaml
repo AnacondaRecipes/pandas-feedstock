@@ -33,7 +33,7 @@ requirements:
     - wheel
     - cython >=0.29.33,<3
     # Using later version of numpy as it is available on all platforms, requirements for 2.0.3 are lower for pandas
-    - numpy 1.23.5
+    - numpy {{ numpy }}
     - versioneer
     - tomli # [py<311]
   run:
