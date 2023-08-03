@@ -55,7 +55,7 @@ requirements:
     # performance
     - numba >=0.53.1
     # plot
-    - matplotlib-base >=3.3.2
+    - matplotlib-base >=3.6.1
     # output_formatting
     - jinja2 >=3.0.0
     - tabulate >=0.8.9
