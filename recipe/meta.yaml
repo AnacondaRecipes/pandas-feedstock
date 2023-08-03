@@ -46,6 +46,7 @@ requirements:
     - python-tzdata >=2022.1
     # Recommended dependencies to achieve large speedups
     # see https://pandas.pydata.org/pandas-docs/version/2.0.3/getting_started/install.html#recommended-dependencies
+    # NOTE: For numexpr, there is disagreement between pyproject.toml and internal documentation.  We went with the higher of the two.
     - numexpr >=2.7.3
     - bottleneck >=1.3.2
   run_constrained:
