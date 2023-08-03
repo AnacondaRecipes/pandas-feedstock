@@ -94,6 +94,9 @@ requirements:
     - brotli >=0.7.0
     - python-snappy >=0.6.0
     - zstandard >=0.15.2
+    # clipboard
+    - pyqt >=5.15.1,<6
+    - qtpy >=2.2.0
     # uncategorized
     - fastparquet >=0.6.3
 test:
