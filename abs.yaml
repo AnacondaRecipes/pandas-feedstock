@@ -1,0 +1,3 @@
+extra_labels_for_os:
+  osx-64: [big-sur]
+  osx-arm64: [big-sur]
