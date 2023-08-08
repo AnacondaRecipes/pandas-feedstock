@@ -109,6 +109,8 @@ test:
     - pytest-cov
     - hypothesis >=6.46.1
     - tomli  # [py<311]
+    - numpy
+    - psutil
   commands:
     - pip check
     # Skip `test_rolling_var_numerical_issues` on `ppc64le` and `osx-arm64 as it is a known test failure.
@@ -120,11 +122,16 @@ test:
     {% set extra_args = ["-m " + " and ".join(markers)] %}
     {% set extra_args = extra_args + ["-n=2"] %}
     {% set tests_to_skip = "_not_a_real_test" %}
-    {% set tests_to_skip = tests_to_skip + " or test_rolling_var_numerical_issues" %}           # [ppc64le or (arm64 and osx)]
+    {% set tests_to_skip = tests_to_skip + " or test_can_set_locale_valid_set" %}               # [osx]
+    {% set tests_to_skip = tests_to_skip + " or test_rolling_var_numerical_issues" %}           # [ppc64le or (arm64 and osx) or s390x]
     {% set tests_to_skip = tests_to_skip + " or test_std_timedelta64_skipna_false" %}           # [ppc64le]
     {% set tests_to_skip = tests_to_skip + " or test_value_counts_normalized[M8[ns]]" %}        # [ppc64le]
     {% set tests_to_skip = tests_to_skip + " or test_to_datetime_format_YYYYMMDD_with_nat" %}   # [ppc64le]
     {% set tests_to_skip = tests_to_skip + " or (TestReductions and test_median_2d)" %}         # [ppc64le]
+    {% set tests_to_skip = tests_to_skip + " or (TestFromArrays and test_constructor)" %}         # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestFromBreaks and test_constructor)" %}         # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestFromTuples and test_constructor)" %}         # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestClassConstructors and test_constructor)" %}  # [s390x]
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")"] %}
     - python -c "import pandas; pandas.test(extra_args={{ extra_args }})"
 
