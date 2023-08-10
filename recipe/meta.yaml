@@ -17,7 +17,7 @@ build:
     - {{ PYTHON }} -m pip install -vv --no-deps --no-build-isolation --ignore-installed . --global-option="build_ext" --global-option="-j1" --no-use-pep517  # [unix]
   entry_points:
     - matplotlib = pandas:plotting._matplotlib
-  skip: true  # [py<38]
+  skip: true  # [py<38 or (py==38 and win)]
 
 requirements:
   build:
@@ -109,8 +109,6 @@ test:
     - pytest-cov
     - hypothesis >=6.46.1
     - tomli  # [py<311]
-    - numpy
-    - psutil
   commands:
     - pip check
     # Skip `test_rolling_var_numerical_issues` on `ppc64le` and `osx-arm64 as it is a known test failure.
