@@ -17,7 +17,7 @@ build:
     - {{ PYTHON }} -m pip install -vv --no-deps --no-build-isolation --ignore-installed . --global-option="build_ext" --global-option="-j1" --no-use-pep517  # [unix]
   entry_points:
     - matplotlib = pandas:plotting._matplotlib
-  skip: true  # [py<38 or (py==38 and win)]
+  skip: true  # [py<38]
 
 requirements:
   build:
