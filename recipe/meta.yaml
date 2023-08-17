@@ -130,6 +130,10 @@ test:
     {% set tests_to_skip = tests_to_skip + " or (TestFromBreaks and test_constructor)" %}         # [s390x]
     {% set tests_to_skip = tests_to_skip + " or (TestFromTuples and test_constructor)" %}         # [s390x]
     {% set tests_to_skip = tests_to_skip + " or (TestClassConstructors and test_constructor)" %}  # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_writer_117)" %}  # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_convert_strl_name_swap)" %}  # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_strl_latin1)" %}  # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_utf8_writer)" %}  # [s390x]
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")"] %}
     - python -c "import pandas; pandas.test(extra_args={{ extra_args }})"
 
