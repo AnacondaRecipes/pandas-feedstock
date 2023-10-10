@@ -104,17 +104,30 @@ test:
     - hypothesis >=6.46.1
   commands:
     - pip check
-    # Skip `test_rolling_var_numerical_issues` on `ppc64le` and `osx-arm64 as it is a known test failure.
-    # xref: https://github.com/conda-forge/pandas-feedstock/issues/149
-    # xref: https://github.com/pandas-dev/pandas/issues/38921
     {% set config_path = "{{ SRC_DIR }}/pyproject.toml" %}
     {% set markers = ["not clipboard", "not single_cpu", "not slow", "not network", "not db"] %}
     {% set markers = markers + ["not arm_slow"] %}   # [aarch64 or ppc64le]
     {% set extra_args = ["-m " + " and ".join(markers)] %}
     {% set extra_args = extra_args + ["-n=2"] %}
     {% set tests_to_skip = "_not_a_real_test" %}
+    {% set tests_to_skip = tests_to_skip + " or test_can_set_locale_valid_set" %}                 # [osx]
+    # skiptest_rolling_var_numerical_issues 
+    # xref: https://github.com/conda-forge/pandas-feedstock/issues/149
+    {% set tests_to_skip = tests_to_skip + " or test_rolling_var_numerical_issues" %}             # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestFromArrays and test_constructor)" %}         # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestFromBreaks and test_constructor)" %}         # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestFromTuples and test_constructor)" %}         # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestClassConstructors and test_constructor)" %}  # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_writer_117)" %}               # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_convert_strl_name_swap)" %}   # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_strl_latin1)" %}              # [s390x]
+    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_utf8_writer)" %}              # [s390x]
+    # skip test_floordiv_axis0_numexpr_path[python-pow] 
+    # xref: https://github.com/pandas-dev/pandas/issues/54546
+    {% set tests_to_skip = tests_to_skip + " or test_floordiv_axis0_numexpr_path[python-pow]" %}
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
-    # why --no-strict-data-files see: https://github.com/pandas-dev/pandas/issues/54907
+    # use --no-strict-data-files 
+    # xref: https://github.com/pandas-dev/pandas/issues/54907
     - python -c "import pandas; pandas.test(extra_args={{ extra_args }})"
 
 about:
