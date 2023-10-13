@@ -12,6 +12,8 @@ source:
 build:
   number: 0
   script:
+    - set -ex           # [unix]
+    - cd {{ SRC_DIR }}  # [osx]
     - export PYTHONUNBUFFERED=1  # [ppc64le]
     - {{ PYTHON }} -m pip install -vv --no-deps --no-build-isolation --ignore-installed .
   entry_points:
