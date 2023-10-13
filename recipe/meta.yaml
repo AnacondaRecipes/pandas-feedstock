@@ -11,11 +11,6 @@ source:
 
 build:
   number: 0
-  script:
-    - set -ex           # [unix]
-    - cd {{ SRC_DIR }}  # [osx]
-    - export PYTHONUNBUFFERED=1  # [ppc64le]
-    - {{ PYTHON }} -m pip install -vv --no-deps --no-build-isolation --ignore-installed .
   entry_points:
     - matplotlib = pandas:plotting._matplotlib
   skip: true  # [py<39]
@@ -26,6 +21,7 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - python
+    - python-build
     - meson-python ==0.13.1
     - meson ==1.2.1
     - wheel
