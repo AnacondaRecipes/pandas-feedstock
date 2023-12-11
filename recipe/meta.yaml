@@ -1,5 +1,5 @@
 {% set name = "pandas" %}
-{% set version = "2.1.1" %}
+{% set version = "2.1.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pandas-{{ version }}.tar.gz
-  sha256: fecb198dc389429be557cde50a2d46da8434a17fe37d7d41ff102e3987fd947b
+  sha256: fcb68203c833cc735321512e13861358079a96c174a61f5116a1de89c58c0ef7
 
 build:
   number: 0
@@ -107,7 +107,7 @@ test:
     {% set extra_args = extra_args + ["-n=2"] %}
     {% set tests_to_skip = "_not_a_real_test" %}
     {% set tests_to_skip = tests_to_skip + " or test_can_set_locale_valid_set" %}                 # [osx]
-    # skiptest_rolling_var_numerical_issues 
+    # skiptest_rolling_var_numerical_issues
     # xref: https://github.com/conda-forge/pandas-feedstock/issues/149
     {% set tests_to_skip = tests_to_skip + " or test_rolling_var_numerical_issues" %}             # [s390x]
     {% set tests_to_skip = tests_to_skip + " or (TestFromArrays and test_constructor)" %}         # [s390x]
@@ -118,7 +118,7 @@ test:
     {% set tests_to_skip = tests_to_skip + " or (TestStata and test_convert_strl_name_swap)" %}   # [s390x]
     {% set tests_to_skip = tests_to_skip + " or (TestStata and test_strl_latin1)" %}              # [s390x]
     {% set tests_to_skip = tests_to_skip + " or (TestStata and test_utf8_writer)" %}              # [s390x]
-    # skip test_floordiv_axis0_numexpr_path[python-pow] 
+    # skip test_floordiv_axis0_numexpr_path[python-pow]
     # xref: https://github.com/pandas-dev/pandas/issues/54546
     {% set tests_to_skip = tests_to_skip + " or test_floordiv_axis0_numexpr_path[python-pow]" %}
     # skip windows tests which call _tz_localize_using_tzinfo_api - fails on CI but not when run on dev instance
@@ -128,7 +128,7 @@ test:
     # test_scalar_unary triggers python 3.12 DeprecationWarning: Bitwise inversion '~' on bool is deprecated.
     {% set tests_to_skip = tests_to_skip + " or test_scalar_unary" %} # [py>=312]
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
-    # use --no-strict-data-files 
+    # use --no-strict-data-files
     # xref: https://github.com/pandas-dev/pandas/issues/54907
     - python -c "import pandas; pandas.test(extra_args={{ extra_args }})"
 
