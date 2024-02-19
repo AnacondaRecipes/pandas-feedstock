@@ -1,8 +1,7 @@
 @echo on
 
 mkdir builddir
-"%PYTHON%" -m build --wheel --no-isolation --skip-dependency-check ^
-    -Cbuilddir=builddir
+exit 1
 if errorlevel 1 (
   type builddir\meson-logs\meson-log.txt
   exit /b 1
