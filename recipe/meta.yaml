@@ -55,7 +55,7 @@ requirements:
     - tabulate >=0.9.0
     # computation
     - scipy >=1.10.0
-    - xarray >=2022.10.0
+    - xarray >=2022.12.0
     # fss
     - fsspec >=2022.11.0
     # aws
@@ -66,13 +66,14 @@ requirements:
     # excel
     - odfpy>=1.4.1
     - openpyxl >=3.1.0
+    - python-calamine >=0.1.7
     - pyxlsb >=1.0.10
     - xlrd >=2.0.1
     - xlsxwriter >=3.0.5
     # parquet, feather
     - pyarrow >=10.0.1
     # hdf5
-    - blosc >=1.20.1
+    - blosc >=1.21.3
     - pytables >=3.8.0
     # spss
     - pyreadstat >=1.2.0
@@ -80,6 +81,8 @@ requirements:
     - sqlalchemy >=2.0.0
     - psycopg2 >=2.9.6
     - pymysql >=1.0.2
+    - adbc-driver-postgresql >=0.8.0
+    - adbc-driver-sqlite >=0.8.0
     # html, xml
     - beautifulsoup4 >=4.11.2
     - html5lib >=1.1
