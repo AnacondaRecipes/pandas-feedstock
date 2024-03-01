@@ -37,14 +37,14 @@ requirements:
     - python-tzdata >=2022.7
     # Recommended dependencies to achieve large speedups
     # see https://pandas.pydata.org/pandas-docs/version/2.1.1/getting_started/install.html#performance-dependencies-recommended
+    # performance
+    - numba >=0.56.4
     - numexpr >=2.8.4
     - bottleneck >=1.3.6
   run_constrained:
     # Optional dependencies
     # see https://pandas.pydata.org/pandas-docs/version/2.1.1/getting_started/install.html#optional-dependencies
     # and https://github.com/pandas-dev/pandas/blob/v2.1.1/pyproject.toml
-    # performance
-    - numba >=0.56.4
     # plot
     - matplotlib-base >=3.6.3
     # output_formatting
