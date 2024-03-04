@@ -24,7 +24,7 @@ requirements:
     - python-build
     - meson-python ==0.13.1
     - meson ==1.2.1
-    - cython >=3.0.5
+    - cython >=3.0.5,<4
     - numpy 1.22  # [py<311]
     - numpy {{ numpy }}  # [py>=311]
     - versioneer
