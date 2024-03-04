@@ -1,3 +1,6 @@
+# Upstream pandas says that 2022 because they use C11.
+# But we found that we can still use 2029 if we use the Windows 10 SDK 19041,
+# which is available on our builder machines.
 c_compiler:  # [win]
   - vs2019  # [win]
 cxx_compiler:  # [win]
