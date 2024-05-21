@@ -10,7 +10,7 @@ source:
   sha256: 0ab90f87093c13f3e8fa45b48ba9f39181046e8f3317d3aadb2fffbb1b978572
 
 build:
-  number: 0
+  number: 1000
   entry_points:
     - matplotlib = pandas:plotting._matplotlib
   skip: true  # [py<39]
