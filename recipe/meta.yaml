@@ -22,17 +22,17 @@ requirements:
   host:
     - python
     - python-build
-    - meson-python ==0.13.1
-    - meson ==1.2.1
+    - meson-python ==0.17.0.dev0
+    - meson >=1.5.1
     - cython >=3.0.5,<4
     - numpy 1.22  # [py<311]
-    - numpy {{ numpy }}  # [py>=311]
+    - numpy >=2.1.0 # [py>=311]
     - versioneer
     - pip
   run:
     - python
     # Base Dependencies
-    - {{ pin_compatible('numpy') }}
+    - numpy >=2.1.0
     - python-dateutil >=2.8.2
     - pytz >=2020.1
     - python-tzdata >=2022.7
@@ -100,6 +100,7 @@ test:
     - pytest >=7.3.2
     - pytest-xdist >=2.2.0
     - hypothesis >=6.46.1
+    - numpy >=2.1.0
   commands:
     - pip check
     {% set config_path = "{{ SRC_DIR }}/pyproject.toml" %}
@@ -129,6 +130,25 @@ test:
     {% set tests_to_skip = tests_to_skip + " or TestDatetime64ArrayLikeComparisons or test_apply_out_of_range or TestNonNano or test_setitem_str_impute_tz" %} # [win]
     # test_scalar_unary triggers python 3.12 DeprecationWarning: Bitwise inversion '~' on bool is deprecated.
     {% set tests_to_skip = tests_to_skip + " or test_scalar_unary" %} # [py>=312]
+
+    # These tests fail with Python 3.12 too when using numpy 2.1.0 (which is necessary for free-threading), so they're not a Python 3.13 issue
+    {% set tests_to_skip = tests_to_skip + " or test_array_interface" %}
+    {% set tests_to_skip = tests_to_skip + " or test_td64arr_mul_tdlike_scalar_raises" %}
+    {% set tests_to_skip = tests_to_skip + " or test_binop_typecasting" %}
+    {% set tests_to_skip = tests_to_skip + " or test_simple_arith_ops" %}
+    {% set tests_to_skip = tests_to_skip + " or test_drop_by_str_label" %}
+    {% set tests_to_skip = tests_to_skip + " or test_loc_iloc_getitem_leading_ellipses" %}
+
+    # These tests fail because of a fix in Python 3.13, see https://github.com/python/cpython/issues/113785
+    {% set tests_to_skip = tests_to_skip + " or test_dialect_conflict" %}
+
+    # These tests fail because of changes in error messages
+    {% set tests_to_skip = tests_to_skip + " or test_cannot_use_custom_businessday" %}
+    {% set tests_to_skip = tests_to_skip + " or test_join_self" %}
+    {% set tests_to_skip = tests_to_skip + " or test_custom_business_day_freq_raises" %}
+    {% set tests_to_skip = tests_to_skip + " or test_td_floordiv_invalid_scalar" %}
+    {% set tests_to_skip = tests_to_skip + " or test_warning_missing_utf_bom" %}
+
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
     # use --no-strict-data-files
     # xref: https://github.com/pandas-dev/pandas/issues/54907
