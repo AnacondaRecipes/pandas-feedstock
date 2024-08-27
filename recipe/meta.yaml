@@ -121,9 +121,6 @@ test:
     {% set tests_to_skip = tests_to_skip + " or (TestStata and test_convert_strl_name_swap)" %}   # [s390x]
     {% set tests_to_skip = tests_to_skip + " or (TestStata and test_strl_latin1)" %}              # [s390x]
     {% set tests_to_skip = tests_to_skip + " or (TestStata and test_utf8_writer)" %}              # [s390x]
-    # skip test_floordiv_axis0_numexpr_path[python-pow]
-    # xref: https://github.com/pandas-dev/pandas/issues/54546
-    {% set tests_to_skip = tests_to_skip + " or test_floordiv_axis0_numexpr_path[python-pow]" %}
     # skip windows tests which call _tz_localize_using_tzinfo_api - fails on CI but not when run on dev instance
     # OSError may be thrown by tzlocal on windows at or close to 1970-01-01
     #  see https://github.com/pandas-dev/pandas/pull/37591#issuecomment-720628241
