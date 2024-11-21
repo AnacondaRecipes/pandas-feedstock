@@ -32,7 +32,8 @@ requirements:
   run:
     - python
     # Base Dependencies
-    - {{ pin_compatible('numpy') }}
+    - numpy >=1.22,<2.0  # [py<310]
+    - numpy >=2.0,<2.3  # [py>=310]
     - python-dateutil >=2.8.2
     - pytz >=2020.1
     - python-tzdata >=2022.7
