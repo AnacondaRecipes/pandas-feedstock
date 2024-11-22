@@ -25,8 +25,8 @@ requirements:
     - meson-python ==0.13.1
     - meson ==1.2.1
     - cython >=3.0.5,<4
-    - numpy >=1.22,<2.0  # [py<310]
-    - numpy >=2.0,<2.3  # [py>=310]
+    - numpy 2.0 # [py<313]
+    - numpy 2.1  # [py>=313]
     - versioneer
     - pip
   run:
