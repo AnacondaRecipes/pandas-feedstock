@@ -112,7 +112,9 @@ test:
     # skip windows tests which call _tz_localize_using_tzinfo_api - fails on CI but not when run on dev instance
     # OSError may be thrown by tzlocal on windows at or close to 1970-01-01
     #  see https://github.com/pandas-dev/pandas/pull/37591#issuecomment-720628241
-    {% set tests_to_skip = tests_to_skip + " or TestDatetime64ArrayLikeComparisons or test_apply_out_of_range or TestNonNano or test_setitem_str_impute_tz" %} # [win]
+    {% set tests_to_skip = tests_to_skip + " or TestDatetime64ArrayLikeComparisons or test_apply_out_of_range or TestNonNano or test_setitem_str_impute_tz or test_run_binary[ne-False-_integer_integers]" %} # [win]
+    # test_scalar_unary triggers python 3.12 DeprecationWarning: Bitwise inversion '~' on bool is deprecated.
+    {% set tests_to_skip = tests_to_skip + " or test_scalar_unary" %} # [py>=312]
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
     # use --no-strict-data-files
     # xref: https://github.com/pandas-dev/pandas/issues/54907
