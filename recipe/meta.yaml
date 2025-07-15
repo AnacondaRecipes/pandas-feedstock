@@ -120,7 +120,7 @@ test:
     # Fixed in https://github.com/pandas-dev/pandas/pull/59016, not yet backported to 2.3
     {% set tests_to_skip = tests_to_skip + " or test_array_inference[data7-expected7]" %}
     # Could be due to uninitialized memory
-    {% set tests_to_skip = tests_to_skip + " or test_run_arithmetic[truediv-False-_frame] or test_run_binary[gt-False-_integer_integers]" %} # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_run_arithmetic or test_run_binary[gt-False-_integer_integers]" %} # [win]
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
     # use --no-strict-data-files
     # xref: https://github.com/pandas-dev/pandas/issues/54907
