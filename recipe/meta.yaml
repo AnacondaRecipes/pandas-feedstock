@@ -1,5 +1,5 @@
 {% set name = "pandas" %}
-{% set version = "2.2.3" %}
+{% set version = "2.3.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,27 +7,24 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pandas-{{ version }}.tar.gz
-  sha256: 4f18ba62b61d7e192368b84517265a99b4d7ee8912f8708660fb4a366cc82667
+  sha256: 0a95b9ac964fe83ce317827f80304d37388ea77616b1425f0ae41c9d2d0d7bb2
 
 build:
   number: 0
-  entry_points:
-    - matplotlib = pandas:plotting._matplotlib
   skip: true  # [py<39]
 
 requirements:
   build:
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
     - python
     - python-build
-    - meson-python ==0.13.1
-    - meson ==1.2.1 # [py<313]
-    - meson ==1.3.1 # [py>=313]
+    - meson-python >=0.13.1
+    - meson >=1.2.1,<2
     - cython >=3.0.5,<4
-    - numpy 2.0 # [py<313]
-    - numpy 2.1  # [py>=313]
+    - numpy {{ numpy}}
     - versioneer
     - pip
   run:
@@ -41,13 +38,13 @@ requirements:
     - pytz >=2020.1
     - python-tzdata >=2022.7
     # Recommended dependencies to achieve large speedups
-    # see https://pandas.pydata.org/pandas-docs/version/2.1.1/getting_started/install.html#performance-dependencies-recommended
+    # see https://pandas.pydata.org/pandas-docs/version/2.3.1/getting_started/install.html#performance-dependencies-recommended
     - numexpr >=2.8.4
     - bottleneck >=1.3.6
   run_constrained:
     # Optional dependencies
-    # see https://pandas.pydata.org/pandas-docs/version/2.1.1/getting_started/install.html#optional-dependencies
-    # and https://github.com/pandas-dev/pandas/blob/v2.1.1/pyproject.toml
+    # see https://pandas.pydata.org/pandas-docs/version/2.3.1/getting_started/install.html#optional-dependencies
+    # and https://github.com/pandas-dev/pandas/blob/v2.3.1/pyproject.toml
     # performance
     - numba >=0.56.4
     # plot
@@ -99,6 +96,8 @@ requirements:
     # uncategorized
     - fastparquet >=2022.12.0
 test:
+  source_files:
+    - pyproject.toml
   requires:
     - pip
     - pytest >=7.3.2
@@ -106,33 +105,22 @@ test:
     - hypothesis >=6.46.1
   commands:
     - pip check
+    - export LC_ALL=en_US.UTF-8  # [osx]
     {% set config_path = "{{ SRC_DIR }}/pyproject.toml" %}
     {% set markers = ["not clipboard", "not single_cpu", "not slow", "not network", "not db"] %}
-    {% set markers = markers + ["not arm_slow"] %}   # [aarch64 or ppc64le]
     {% set extra_args = ["-m " + " and ".join(markers)] %}
     {% set extra_args = extra_args + ["-n=2"] %}
     {% set tests_to_skip = "_not_a_real_test" %}
-    {% set tests_to_skip = tests_to_skip + " or test_can_set_locale_valid_set" %}                 # [osx]
-    # skiptest_rolling_var_numerical_issues
-    # xref: https://github.com/conda-forge/pandas-feedstock/issues/149
-    {% set tests_to_skip = tests_to_skip + " or test_rolling_var_numerical_issues" %}             # [s390x]
-    {% set tests_to_skip = tests_to_skip + " or (TestFromArrays and test_constructor)" %}         # [s390x]
-    {% set tests_to_skip = tests_to_skip + " or (TestFromBreaks and test_constructor)" %}         # [s390x]
-    {% set tests_to_skip = tests_to_skip + " or (TestFromTuples and test_constructor)" %}         # [s390x]
-    {% set tests_to_skip = tests_to_skip + " or (TestClassConstructors and test_constructor)" %}  # [s390x]
-    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_writer_117)" %}               # [s390x]
-    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_convert_strl_name_swap)" %}   # [s390x]
-    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_strl_latin1)" %}              # [s390x]
-    {% set tests_to_skip = tests_to_skip + " or (TestStata and test_utf8_writer)" %}              # [s390x]
-    # skip test_floordiv_axis0_numexpr_path python-pow
-    # xref: https://github.com/pandas-dev/pandas/issues/54546
-    {% set tests_to_skip = tests_to_skip + " or test_floordiv_axis0_numexpr_path" %}
     # skip windows tests which call _tz_localize_using_tzinfo_api - fails on CI but not when run on dev instance
     # OSError may be thrown by tzlocal on windows at or close to 1970-01-01
     #  see https://github.com/pandas-dev/pandas/pull/37591#issuecomment-720628241
-    {% set tests_to_skip = tests_to_skip + " or TestDatetime64ArrayLikeComparisons or test_apply_out_of_range or TestNonNano or test_setitem_str_impute_tz" %} # [win]
+    {% set tests_to_skip = tests_to_skip + " or TestDatetime64ArrayLikeComparisons or test_apply_out_of_range or TestNonNano or test_setitem_str_impute_tz or test_run_binary[ne-False-_integer_integers]" %} # [win]
     # test_scalar_unary triggers python 3.12 DeprecationWarning: Bitwise inversion '~' on bool is deprecated.
     {% set tests_to_skip = tests_to_skip + " or test_scalar_unary" %} # [py>=312]
+    # Fixed in https://github.com/pandas-dev/pandas/pull/59016, not yet backported to 2.3
+    {% set tests_to_skip = tests_to_skip + " or test_array_inference[data7-expected7]" %}
+    # Could be due to uninitialized memory
+    {% set tests_to_skip = tests_to_skip + " or test_run_arithmetic or test_run_binary" %} # [win]
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
     # use --no-strict-data-files
     # xref: https://github.com/pandas-dev/pandas/issues/54907
