@@ -21,10 +21,11 @@ requirements:
   host:
     - python
     - python-build
+    - ninja-base  # [win]
     - meson-python >=0.13.1
     - meson >=1.2.1,<2
-    - cython <4
-    - numpy {{ numpy}}
+    - cython >=3.0.5,<4
+    - numpy {{ numpy }}
     - versioneer 0.29
     - tomli 2.2.1
     - pip
