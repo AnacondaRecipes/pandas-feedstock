@@ -27,7 +27,7 @@ requirements:
     - cython >=3.0.5,<4
     - numpy {{ numpy }}
     - versioneer 0.29
-    - tomli 2.2.1
+    - tomli  # [py<311]
     - pip
   run:
     - python
@@ -74,7 +74,7 @@ requirements:
     # parquet, feather
     - pyarrow >=10.0.1
     # hdf5
-    - blosc >=1.20.1
+    - blosc >=1.21.3
     - pytables >=3.8.0
     # spss
     - pyreadstat >=1.2.0
