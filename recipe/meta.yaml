@@ -1,13 +1,13 @@
 {% set name = "pandas" %}
-{% set version = "2.3.1" %}
+{% set version = "2.3.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pandas-{{ version }}.tar.gz
-  sha256: 0a95b9ac964fe83ce317827f80304d37388ea77616b1425f0ae41c9d2d0d7bb2
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ab7b58f8f82706890924ccdfb5f48002b83d2b5a3845976a9fb705d36c34dcdb
 
 build:
   number: 0
@@ -21,11 +21,13 @@ requirements:
   host:
     - python
     - python-build
+    - ninja-base  # [win]
     - meson-python >=0.13.1
     - meson >=1.2.1,<2
     - cython >=3.0.5,<4
-    - numpy {{ numpy}}
-    - versioneer
+    - numpy {{ numpy }}
+    - versioneer 0.29
+    - tomli  # [py<311]
     - pip
   run:
     - python
@@ -38,13 +40,13 @@ requirements:
     - pytz >=2020.1
     - python-tzdata >=2022.7
     # Recommended dependencies to achieve large speedups
-    # see https://pandas.pydata.org/pandas-docs/version/2.3.1/getting_started/install.html#performance-dependencies-recommended
+    # see https://pandas.pydata.org/pandas-docs/version/2.3.2/getting_started/install.html#performance-dependencies-recommended
     - numexpr >=2.8.4
     - bottleneck >=1.3.6
   run_constrained:
     # Optional dependencies
-    # see https://pandas.pydata.org/pandas-docs/version/2.3.1/getting_started/install.html#optional-dependencies
-    # and https://github.com/pandas-dev/pandas/blob/v2.3.1/pyproject.toml
+    # see https://pandas.pydata.org/pandas-docs/version/2.3.2/getting_started/install.html#optional-dependencies
+    # and https://github.com/pandas-dev/pandas/blob/v2.3.2/pyproject.toml
     # performance
     - numba >=0.56.4
     # plot
