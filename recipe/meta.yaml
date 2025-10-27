@@ -6,11 +6,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: e05e1af93b977f7eafa636d043f9f94c7ee3ac81af99c13508215942e64c993b
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<39]
 
 requirements:
@@ -123,6 +123,10 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_array_inference[data7-expected7]" %}
     # Could be due to uninitialized memory
     {% set tests_to_skip = tests_to_skip + " or test_run_arithmetic or test_run_binary" %} # [win]
+    # Skip due to incompatibility with numexpr 2.14.1. TODO: Delete with pandas new release, see https://github.com/pandas-dev/pandas/pull/62553
+    {% set tests_to_skip = tests_to_skip + " or test_binop_other or test_add_list_to_masked_array_boolean or test_bool_ops_warn_on_arithmetic" %}
+    # Skip tests that fail with python 3.14 due to new exception messages. Delete once fixed.
+    {% set tests_to_skip = tests_to_skip + " or test_simple_cmp_ops or test_compound_invert_op or test_simple_arith_ops" %} # [py==314]
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
     # use --no-strict-data-files
     # xref: https://github.com/pandas-dev/pandas/issues/54907
