@@ -1,5 +1,23 @@
 {% set name = "pandas" %}
-{% set version = "3.0.0" %}
+{% set version = "3.0.1" %}
+{% set config_path = "{{ SRC_DIR }}/pyproject.toml" %}
+{% set markers = [
+  "not clipboard",
+  "not single_cpu",
+  "not slow",
+  "not network",
+  "not db"
+] %}
+{% set extra_args = ["-m " + " and ".join(markers)] %}
+{% set extra_args = 'extra_args + ["-n=2"]' %}
+{% set extra_args = 'extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"]' %}
+{% set tests_to_skip = "_not_a_real_test" %}
+{% set tests_to_skip = 'tests_to_skip + " or TestDatetime64ArrayLikeComparisons or test_apply_out_of_range or TestNonNano or test_setitem_str_impute_tz or test_run_binary[ne-False-_integer_integers]"' %}  # [win]
+{% set tests_to_skip = tests_to_skip + " or test_scalar_unary" %}  # [py>=312]
+{% set tests_to_skip = 'tests_to_skip + " or test_array_inference[data7-expected7]"' %}
+{% set tests_to_skip = tests_to_skip + " or test_run_arithmetic or test_run_binary" %}  # [win]
+{% set tests_to_skip = tests_to_skip + " or test_binop_other or test_add_list_to_masked_array_boolean or test_bool_ops_warn_on_arithmetic" %}
+{% set tests_to_skip = tests_to_skip + " or test_simple_cmp_ops or test_compound_invert_op or test_simple_arith_ops" %}  # [py==314]
 
 package:
   name: {{ name|lower }}
@@ -7,7 +25,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 0facf7e87d38f721f0af46fe70d97373a37701b1c09f7ed7aeeb292ade5c050f
+  sha256: 4186a699674af418f655dbd420ed87f50d56b4cd6603784279d9eef6627823c8
 
 build:
   number: 0
@@ -25,16 +43,18 @@ requirements:
     - ninja-base  # [win]
     - meson-python >=0.17.1,<1
     - meson >=1.2.1,<2
-    - cython <4
+    - cython >3.1.0,<4.0.0a0
     - numpy {{ numpy }}
-    - versioneer 0.29
+    - versioneer
     - wheel
+    - numpy >=2.0.0
   run:
     - python
-    - numpy >=1.26.0 # [py<314]
+    - numpy >=2.3.3  # [py>=314]
     - numpy >=2.3.3  # [py>=314]
     - python-dateutil >=2.8.2
     - python-tzdata  # [win]
+    - tzdata  # [emscripten]
   run_constrained:
     - adbc-driver-postgresql >=1.2.0
     - adbc-driver-sqlite >=1.2.0
@@ -57,7 +77,7 @@ requirements:
     - pyarrow >=13.0.0
     - pyiceberg >=0.8.1
     - pymysql >=1.1.1
-    - pyqt5 >=5.15.9
+    - PyQt5 >=5.15.9
     - pyreadstat >=1.2.8
     - pytables >=3.10.1
     - pytest >=8.3.4
@@ -68,12 +88,13 @@ requirements:
     - qtpy >=2.4.2
     - scipy >=1.14.1
     - s3fs >=2024.10.0
-    - sqlalchemy >=2.0.36
+    - SQLAlchemy >=2.0.36
     - tabulate >=0.9.0
     - xarray >=2024.10.0
     - xlrd >=2.0.1
     - xlsxwriter >=3.2.0
     - zstandard >=0.23.0
+    - matplotlib-base >=3.9.3
 
 test:
   source_files:
@@ -86,26 +107,14 @@ test:
   commands:
     - pip check
     - export LC_ALL=en_US.UTF-8  # [osx]
-    {% set config_path = "{{ SRC_DIR }}/pyproject.toml" %}
-    {% set markers = ["not clipboard", "not single_cpu", "not slow", "not network", "not db"] %}
-    {% set extra_args = ["-m " + " and ".join(markers)] %}
-    {% set extra_args = extra_args + ["-n=2"] %}
-    {% set tests_to_skip = "_not_a_real_test" %}
     # skip windows tests which call _tz_localize_using_tzinfo_api - fails on CI but not when run on dev instance
     # OSError may be thrown by tzlocal on windows at or close to 1970-01-01
     #  see https://github.com/pandas-dev/pandas/pull/37591#issuecomment-720628241
-    {% set tests_to_skip = tests_to_skip + " or TestDatetime64ArrayLikeComparisons or test_apply_out_of_range or TestNonNano or test_setitem_str_impute_tz or test_run_binary[ne-False-_integer_integers]" %} # [win]
     # test_scalar_unary triggers python 3.12 DeprecationWarning: Bitwise inversion '~' on bool is deprecated.
-    {% set tests_to_skip = tests_to_skip + " or test_scalar_unary" %} # [py>=312]
     # Fixed in https://github.com/pandas-dev/pandas/pull/59016, not yet backported to 2.3
-    {% set tests_to_skip = tests_to_skip + " or test_array_inference[data7-expected7]" %}
     # Could be due to uninitialized memory
-    {% set tests_to_skip = tests_to_skip + " or test_run_arithmetic or test_run_binary" %} # [win]
     # Skip due to incompatibility with numexpr 2.14.1. TODO: Delete with pandas new release, see https://github.com/pandas-dev/pandas/pull/62553
-    {% set tests_to_skip = tests_to_skip + " or test_binop_other or test_add_list_to_masked_array_boolean or test_bool_ops_warn_on_arithmetic" %}
     # Skip tests that fail with python 3.14 due to new exception messages. Delete once fixed.
-    {% set tests_to_skip = tests_to_skip + " or test_simple_cmp_ops or test_compound_invert_op or test_simple_arith_ops" %} # [py==314]
-    {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
     # use --no-strict-data-files
     # xref: https://github.com/pandas-dev/pandas/issues/54907
     - python -c "import pandas; pandas.test(extra_args={{ extra_args }})"
