@@ -1,5 +1,5 @@
 {% set name = "pandas" %}
-{% set version = "3.0.0" %}
+{% set version = "3.0.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 0facf7e87d38f721f0af46fe70d97373a37701b1c09f7ed7aeeb292ade5c050f
+  sha256: 4186a699674af418f655dbd420ed87f50d56b4cd6603784279d9eef6627823c8
 
 build:
   number: 0
@@ -25,7 +25,7 @@ requirements:
     - ninja-base  # [win]
     - meson-python >=0.17.1,<1
     - meson >=1.2.1,<2
-    - cython <4
+    - cython >=3.1.0,<4.0.0a0
     - numpy {{ numpy }}
     - versioneer 0.29
     - wheel
