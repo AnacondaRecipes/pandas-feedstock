@@ -1,5 +1,5 @@
 {% set name = "pandas" %}
-{% set version = "3.0.1" %}
+{% set version = "3.0.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 4186a699674af418f655dbd420ed87f50d56b4cd6603784279d9eef6627823c8
+  sha256: f4753e73e34c8d83221ba58f232433fca2748be8b18dbca02d242ed153945043
 
 build:
   number: 0
@@ -22,12 +22,12 @@ requirements:
   host:
     - pip
     - python
-    - ninja-base  # [win]
+    - ninja-base
     - meson-python >=0.17.1,<1
     - meson >=1.2.1,<2
-    - cython >=3.1.0,<4.0.0a0
+    - cython >3.1.0,<4.0.0a0
     - numpy {{ numpy }}
-    - versioneer 0.29
+    - versioneer
     - wheel
   run:
     - python
@@ -78,18 +78,30 @@ requirements:
 test:
   source_files:
     - pyproject.toml
+  imports:
+    - pandas.api
+    - pandas.arrays
+    - pandas.compat
+    - pandas.core
+    - pandas.errors
+    - pandas.io
+    - pandas.plotting
+    - pandas.testing
+    - pandas.tests
+    - pandas.tseries
+    - pandas.util
   requires:
     - pip
-    - pytest >=7.3.2
-    - pytest-xdist >=2.2.0
-    - hypothesis >=6.46.1
+    - pytest >=8.3.4
+    - pytest-xdist >=3.6.1
+    - hypothesis >=6.116.0
   commands:
     - pip check
-    - export LC_ALL=en_US.UTF-8  # [osx]
+    - export LC_ALL=en_US.UTF-8  # [unix]
     {% set config_path = "{{ SRC_DIR }}/pyproject.toml" %}
     {% set markers = ["not clipboard", "not single_cpu", "not slow", "not network", "not db"] %}
     {% set extra_args = ["-m " + " and ".join(markers)] %}
-    {% set extra_args = extra_args + ["-n=2"] %}
+    {% set extra_args = extra_args + ["-ra -v -n auto"] %}
     {% set tests_to_skip = "_not_a_real_test" %}
     # skip windows tests which call _tz_localize_using_tzinfo_api - fails on CI but not when run on dev instance
     # OSError may be thrown by tzlocal on windows at or close to 1970-01-01
