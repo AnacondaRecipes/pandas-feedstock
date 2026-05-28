@@ -37,7 +37,6 @@ requirements:
     - python-dateutil >=2.8.2
     - python-tzdata   # [win]
   run_constrained:
-    # These constraints are sourced from environment.yml and/or doc/source/whatsnew/v3.0.0.rst
     - adbc-driver-postgresql >=1.2.0
     - adbc-driver-sqlite >=1.2.0
     - beautifulsoup4 >=4.12.3
@@ -60,6 +59,7 @@ requirements:
     - pyarrow >=13.0.0,<24
     - pyiceberg >=0.8.1
     - pymysql >=1.1.1
+    # clipboard wants pyqt5 which we don't have
     - pyqt5 >=5.15.9
     - pyreadstat >=1.2.8
     - pytables >=3.10.1
@@ -99,7 +99,8 @@ test:
     - pytest-xdist >=3.6.1
     - pytest-qt >=4.4.0
     - hypothesis >=6.116.0
-    - pyqt5 >=5.15.9
+    # https://github.com/pandas-dev/pandas/blob/v3.0.3/environment.yml#L21
+    - pyqt >=5.15.9
   commands:
     - pip check
     - export LC_ALL=en_US.UTF-8  # [unix]
