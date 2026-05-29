@@ -1,5 +1,5 @@
 {% set name = "pandas" %}
-{% set version = "3.0.2" %}
+{% set version = "3.0.3" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f4753e73e34c8d83221ba58f232433fca2748be8b18dbca02d242ed153945043
+  sha256: 696a4a00a2a2a35d4e5deb3fc946641b96c944f02230e4f76137fe35d806c4fc
 
 build:
   number: 0
@@ -22,7 +22,8 @@ requirements:
   host:
     - pip
     - python
-    - ninja-base
+    # meson[ninja] is referenced otherwise: meson-python: error: Could not find ninja version 1.8.2 or newer.
+    - ninja-base >=1.8.2
     - meson-python >=0.17.1,<1
     - meson >=1.2.1,<2
     - cython >3.1.0,<4.0.0a0
@@ -31,15 +32,14 @@ requirements:
     - wheel
   run:
     - python
-    - numpy >=1.26.0 # [py<314]
-    - numpy >=2.3.3  # [py>=314]
+    - numpy >=1.26.0  # [py<314]
+    - numpy >=2.3.3   # [py>=314]
     - python-dateutil >=2.8.2
-    - python-tzdata  # [win]
+    - python-tzdata   # [win]
   run_constrained:
     - adbc-driver-postgresql >=1.2.0
     - adbc-driver-sqlite >=1.2.0
     - beautifulsoup4 >=4.12.3
-    - blosc >=1.21.3
     - bottleneck >=1.4.2
     - fastparquet >=2024.11.0
     - fsspec >=2024.10.0
@@ -48,22 +48,24 @@ requirements:
     - hypothesis >=6.116.0
     - jinja2 >=3.1.5
     - lxml >=5.3.0
-    - matplotlib >=3.9.3
+    - matplotlib-base >=3.9.3
     - numba >=0.60.0
     - numexpr >=2.10.2
     - odfpy >=1.4.1
     - openpyxl >=3.1.5
     - psycopg2 >=2.9.10
-    - pyarrow >=13.0.0
+    # tmp pyarrow upper bound, see https://github.com/pandas-dev/pandas/blob/v3.0.3/environment.yml#L46
+    - pyarrow >=13.0.0,<24
     - pyiceberg >=0.8.1
     - pymysql >=1.1.1
+    # clipboard wants pyqt5 which we don't have
     - pyqt5 >=5.15.9
     - pyreadstat >=1.2.8
     - pytables >=3.10.1
     - pytest >=8.3.4
     - pytest-xdist >=3.6.1
     - python-calamine >=0.3.0
-    - pytz >=2024.2
+    - pytz >=2020.1
     - pyxlsb >=1.0.10
     - qtpy >=2.4.2
     - scipy >=1.14.1
@@ -94,7 +96,10 @@ test:
     - pip
     - pytest >=8.3.4
     - pytest-xdist >=3.6.1
+    - pytest-qt >=4.4.0
     - hypothesis >=6.116.0
+    # https://github.com/pandas-dev/pandas/blob/v3.0.3/environment.yml#L21
+    - pyqt >=5.15.9
   commands:
     - pip check
     - export LC_ALL=en_US.UTF-8  # [unix]
