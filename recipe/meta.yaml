@@ -1,5 +1,5 @@
 {% set name = "pandas" %}
-{% set version = "3.0.5" %}
+{% set version = "3.0.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: dca3734d6ab7c906e6730f0788b0a1dbb9f2467731f9711f77995c8e9d62d712
+  sha256: 66b07ef7315a31bfe1089cd3d71a7de781c9dca986762d0b4fe7c0ef17465d10
 
 build:
   number: 0
@@ -55,7 +55,7 @@ requirements:
     - openpyxl >=3.1.5
     - psycopg2 >=2.9.10
     # tmp pyarrow upper bound, see https://github.com/pandas-dev/pandas/blob/v3.0.5/environment.yml#L47
-    - pyarrow >=13.0.0,<24
+    - pyarrow >=13.0.0
     - pyiceberg >=0.8.1
     - pymysql >=1.1.1
     # clipboard wants pyqt5 which we don't have
