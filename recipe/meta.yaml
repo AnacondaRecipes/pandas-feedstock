@@ -102,6 +102,7 @@ test:
     - pyproject.toml
   requires:
     - pip
+    - numpy <2.5 # avoid deprecation warning causing test failures. 
     - pytest >=7.3.2
     - pytest-xdist >=2.2.0
     - hypothesis >=6.46.1
