@@ -24,7 +24,7 @@ requirements:
     - ninja-base  # [win]
     - meson-python >=0.13.1
     - meson >=1.2.1,<2
-    - cython >=3.0.5,<4
+    - cython >=3.0.5,<3.2
     - numpy {{ numpy }}
     - versioneer 0.29
     - tomli  # [py<311]
