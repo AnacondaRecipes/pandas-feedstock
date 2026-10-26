@@ -10,7 +10,7 @@ source:
   sha256: 66b07ef7315a31bfe1089cd3d71a7de781c9dca986762d0b4fe7c0ef17465d10
 
 build:
-  number: 1
+  number: 2
   skip: true  # [py<311]
   script: {{ PYTHON }} -m pip install -vv --no-deps --no-build-isolation --ignore-installed .
 
@@ -141,8 +141,6 @@ about:
   doc_url: https://pandas.pydata.org/pandas-docs/version/{{ version }}/index.html
 
 extra:
-  skip-lints:
-    - has_run_test_and_commands
   recipe-maintainers:
     - jreback
     - jorisvandenbossche
