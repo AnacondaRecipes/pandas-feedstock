@@ -95,7 +95,6 @@ test:
     - pip
     - pytest >=8.3.4,<9.1
     - pytest-xdist >=3.6.1
-    - hypothesis >=6.116.0
   commands:
     - pip check
     - export LC_ALL=en_US.UTF-8  # [unix]
@@ -112,8 +111,6 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_scalar_unary" %} # [py>=312]
     # Could be due to uninitialized memory
     {% set tests_to_skip = tests_to_skip + " or test_run_arithmetic or test_run_binary" %} # [win]
-    # Skip due to incompatibility with numexpr 2.14.1. TODO: Delete with pandas new release, see https://github.com/pandas-dev/pandas/pull/62553
-    {% set tests_to_skip = tests_to_skip + " or test_binop_other or test_add_list_to_masked_array_boolean or test_bool_ops_warn_on_arithmetic" %}
     # macOS CI: dateutil London DST gap shifts differ by one hour; cause unconfirmed.
     {% set tests_to_skip = tests_to_skip + " or (test_dti_tz_localize_nonexistent_shift and dateutil/ and Europe/London and (backward or shift11))" %} # [osx]
     {% set extra_args = extra_args + ["-k", "not (" + tests_to_skip + ")", "--no-strict-data-files"] %}
@@ -123,9 +120,29 @@ test:
 
 about:
   home: https://pandas.pydata.org
-  license: BSD-3-Clause
-  license_family: BSD
-  license_file: LICENSE
+  license: BSD-3-Clause AND BSD-2-Clause AND MIT AND Apache-2.0 AND PSF-2.0 AND TCL
+  license_family: OTHER
+  license_file:
+    - LICENSE
+    - LICENSES/BOTTLENECK_LICENCE
+    - LICENSES/DATEUTIL_LICENSE
+    - LICENSES/HAVEN_LICENSE
+    - LICENSES/HAVEN_MIT
+    - LICENSES/KLIB_LICENSE
+    - LICENSES/MUSL_LICENSE
+    - LICENSES/NERI_SCHNEIDER_LICENSE
+    - LICENSES/NUMPY_LICENSE
+    - LICENSES/PACKAGING_LICENSE
+    - LICENSES/PSF_LICENSE
+    - LICENSES/PYPERCLIP_LICENSE
+    - LICENSES/PYUPGRADE_LICENSE
+    - LICENSES/SAS7BDAT_LICENSE
+    - LICENSES/STATSBASE_JL_LICENSE
+    - LICENSES/ULTRAJSON_LICENSE
+    - LICENSES/XSIMD_LICENSE
+    - subprojects/fast_float-8.2.10/LICENSE-APACHE
+    - subprojects/fast_float-8.2.10/LICENSE-BOOST
+    - subprojects/fast_float-8.2.10/LICENSE-MIT
   summary: High-performance, easy-to-use data structures and data analysis tools.
   description: |
     pandas is a Python package that provides fast, flexible, and expressive data structures
